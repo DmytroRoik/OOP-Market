@@ -1,15 +1,41 @@
 var $modalWindow=document.getElementById('modalWindow');
+var $imgTooltip=$modalWindow.getElementsByClassName('tooltip')[0];
+var shop=ShopModule.getInstance();
+var selectedCartItems=[];
+
+
 $modalWindow.getElementsByClassName('btnClose')[0].addEventListener('click',function () {
 	$modalWindow.classList.add('hidden');
 });
 
 document.getElementById('btnCart').addEventListener('click',function () {//load cart
-	UpdateCart();
+
+	createModal("Cart","cart",true);
+});
+document.getElementById('btnSoldItems').addEventListener('click',function(){
+	createModal("Sold Items","order",false);
+});
+
+$modalWindow.getElementsByClassName('btnBuy')[0].addEventListener('click', function () {
+	for(var el of selectedCartItems){
+		shop.soldItem(el);
+	}
+	updateCart();
+});
+function createModal(title,type,showBtnBuy){
 	$modalWindow.classList.remove('hidden');
-})
+	$modalWindow.getElementsByTagName('h1')[0].innerText=title;
+	if(type=="cart"){
+		updateCart();
+	}
+	else{
+		updateOrder();
+	}
 
-
-var shop=ShopModule.getInstance();
+	var $btnBuy=$modalWindow.getElementsByClassName('btnBuy')[0];
+	if(showBtnBuy)$btnBuy.classList.remove('hidden');
+	else $btnBuy.classList.add('hidden');
+}
 
 shop.addItem(new Item({id:0, type:"fruit",price: 40,weight:1.5,name:"apple", icon: "https://media.istockphoto.com/photos/red-apple-with-leaf-isolated-on-white-background-picture-id185262648?k=6&m=185262648&s=612x612&w=0&h=u9rMspGGTOkgUSzZ6INtT_Ww4NpGz9zHMGRmIJJjBqQ="}))
 shop.addItem(new Item({id:1, type:"fruit",price: 50,weight:1,name:"strawberry", icon: "https://img.buzzfeed.com/buzzfeed-static/static/2015-03/6/14/enhanced/webdr06/enhanced-5904-1425669663-1.jpg?downsize=715:*&output-format=auto&output-quality=auto"}))
@@ -66,7 +92,8 @@ function createItemTemplate (item) {//for items list
 		$li.append($hItemName,$imgItemIcon,$spanItemWeight,$spanItemPrice,$buttonAddToCart);
 		return $li;
 	}
-var $imgTooltip=$modalWindow.getElementsByClassName('tooltip')[0];
+
+
 function createCartItemTemplate (item){
 	var $li = document.createElement('li');
 		$li.classList.add('cartItem');
@@ -83,7 +110,7 @@ function createCartItemTemplate (item){
 		$checkInput.setAttribute('type', 'checkbox');
 		$checkInput.checked=true;
 		$checkInput.addEventListener('change', function () {
-			UpdateTotalPriceAndWeight();
+			UpdateTotalPriceAndWeight(shop.getSelectedItems());
 		});
 	var $spanInfo=document.createElement('span');
 		$spanInfo=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
@@ -99,30 +126,73 @@ function createCartItemTemplate (item){
 	$li.append($checkInput,$spanInfo,$btnClose);
   return $li;
 }
-function UpdateCart () {
+var index=0;
+function createOrderItemTemplate (item){
+	var $li = document.createElement('li');
+		$li.classList.add('cartItem');
+		$li.addEventListener('mousemove', function (e) {
+			$imgTooltip.src=item.icon;
+			$imgTooltip.style.top=e.clientY-0.14*window.innerHeight+'px';
+			$imgTooltip.style.left = e.clientX-0.19*window.innerWidth+'px';
+			$imgTooltip.classList.remove('hidden');
+		});
+		$li.addEventListener('mouseleave', function (e) {
+			$imgTooltip.classList.add('hidden');
+		})
+
+	var $spanInfo=document.createElement('span');
+		$spanInfo= ++index+') '+ item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
+	$li.append($spanInfo);
+  return $li;
+}
+
+function deleteItemsFromModal(){
+	document.getElementById('CartList').innerHTML='';
+}
+function updateCart () {
+	deleteItemsFromModal();
 	var $cart=document.getElementById('CartList');
-	$cart.innerHTML='';
 	for(var el of shop.getSelectedItems()){
 		$cart.append(createCartItemTemplate(el));
 	}
 	$imgTooltip.classList.add('hidden');
-	UpdateTotalPriceAndWeight();
+	UpdateTotalPriceAndWeight(shop.getSelectedItems());
 }
-function UpdateTotalPriceAndWeight(){//for cart
+function updateOrder () {
+	deleteItemsFromModal();
+	var $cart=document.getElementById('CartList');
+	for(var el of shop.getSoldItems()){
+		$cart.append(createOrderItemTemplate (el));
+	}
+	$imgTooltip.classList.add('hidden');
+	updateTotalInfoOrder(shop.getSoldItems());
+}
+
+function UpdateTotalPriceAndWeight(selectedItems){//for cart
 	var $checkboxesItems=document.querySelectorAll('.cartItem input[type=checkbox]');
-	var selectedItems=shop.getSelectedItems();
-	var totalPrice=0,
-		totalWeight=0;
+	selectedCartItems=[];
+
 	for(var i=0;i<$checkboxesItems.length;i++){
 		if($checkboxesItems[i].checked==true){
-			totalPrice+=selectedItems[i].price;
-			totalWeight+=selectedItems[i].weight;
+			selectedCartItems.push( selectedItems[i]);
 		}
 	}
+	var total= shop.CalcTotalPriceAndWeight(selectedCartItems);
+
 	var $spanTotalPrice=$modalWindow.querySelector('.total-price span');
 	var $spanTotalWeight=$modalWindow.querySelector('.total-weight span');
 
-	console.log($spanTotalWeight.innerText);
-	$spanTotalPrice.innerText=totalPrice;
-	$spanTotalWeight.innerText=totalWeight;
+	$spanTotalPrice.innerText=total.price;
+	$spanTotalWeight.innerText=total.weight;
 }
+function updateTotalInfoOrder(){//for order
+
+	var total=shop.CalcTotalPriceAndWeight(shop.getSoldItems());
+console.log(total);
+	var $spanTotalPrice=$modalWindow.querySelector('.total-price span');
+	var $spanTotalWeight=$modalWindow.querySelector('.total-weight span');
+
+	$spanTotalPrice.innerText=total.price;
+	$spanTotalWeight.innerText=total.weight;
+}
+

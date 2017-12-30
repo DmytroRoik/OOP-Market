@@ -11,7 +11,9 @@ var ShopModule=(function(){
 			addItem: addItem,
 			addItemToCart: addItemToCart,
 			removeSelectedItem: removeSelectedItemFromCart,
+			CalcTotalPriceAndWeight:CalcTotalPriceAndWeight,
 			soldItem:soldItem,
+			getSoldItems: getSoldItems,
 		}
 	}
 
@@ -42,6 +44,16 @@ var ShopModule=(function(){
 		soldItems.push(item);
 		removeSelectedItemFromCart(item);
 	}
+	var CalcTotalPriceAndWeight=function(selectedItems){
+		var	totalPrice=0,
+		totalWeight=0;
+		for(var el of selectedItems){
+			totalPrice+= el.price;
+			totalWeight+=el.weight;
+		}
+	return {price: totalPrice, weight: totalWeight};
+	}
+
 	var getSoldItems=function () {
 		return soldItems;
 	}
