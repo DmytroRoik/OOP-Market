@@ -6,16 +6,20 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-	<header>
-		<button id="btnCart">Cart</button>
+	<header class="container">
+		<button id="btnCart" class="header-btn"><img src="http://smashinghub.com/wp-content/uploads/2012/01/shopping-cart-icon.jpg" alt="">
+		</img></button>
+		<button id="btnSoldItems" class="header-btn"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-rnmBBcB36b7c-1EvPY7qhyPRT8ziQp5Z14xME0l4-Jh0UvCb" alt="">
+		</img></button>
 	</header>
-	<section>
+	<section id="ShopItems" class="container">
 		<h1>Shop Items</h1>
 		<ul id="Allitems">
 		</ul>
 	</section>
 	<section id="modalWindow" class="hidden">
-		<button id="btnClose">X</button>
+		<img alt="" class="tooltip" class="hidden">
+		<button class="btnClose">X</button>
 		<h1>Cart</h1>
 		<ul id="CartList">
 
@@ -24,7 +28,7 @@
 			<h3 class="total-weight">Total weight:<span>0</span>kg</h3>
 			<h3 class="total-price">Total price: <span>0</span>hrn</h3>
 		</div>
-		<button>Buy</button>
+		<button class="btnBuy">Buy</button>
 	</section>
 	<script src="js/item.js"></script>
 	<script src="js/shop.js"></script>

@@ -1,17 +1,11 @@
 var $modalWindow=document.getElementById('modalWindow');
-document.getElementById('btnClose').addEventListener('click',function () {
+$modalWindow.getElementsByClassName('btnClose')[0].addEventListener('click',function () {
 	$modalWindow.classList.add('hidden');
 });
 
 document.getElementById('btnCart').addEventListener('click',function () {//load cart
-	var $cart=document.getElementById('CartList');
-	$cart.innerHTML='';
-	console.log(shop.getSelectedItems())
-	for(var el of shop.getSelectedItems()){
-		$cart.append(createCartItemTemplate(el));
-	}
+	UpdateCart();
 	$modalWindow.classList.remove('hidden');
-	UpdateTotalPriceAndWeight();
 })
 
 
@@ -72,23 +66,18 @@ function createItemTemplate (item) {//for items list
 		$li.append($hItemName,$imgItemIcon,$spanItemWeight,$spanItemPrice,$buttonAddToCart);
 		return $li;
 	}
-var $image=document.createElement('img');
-			$image.style.height = '200px';
-			$image.style.width = '200px';
-			$image.style.position = 'absolute';
-			$image.style.borderRadius = '40px';
-			$image.style.overflow = 'hidden';
+var $imgTooltip=$modalWindow.getElementsByClassName('tooltip')[0];
 function createCartItemTemplate (item){
 	var $li = document.createElement('li');
 		$li.classList.add('cartItem');
 		$li.addEventListener('mousemove', function (e) {
-			$image.src=item.icon;
-			$image.style.top=e.clientY-0.14*window.innerHeight+'px';
-			$image.style.left = e.clientX-0.19*window.innerWidth+'px';
-			$modalWindow.append($image);
+			$imgTooltip.src=item.icon;
+			$imgTooltip.style.top=e.clientY-0.14*window.innerHeight+'px';
+			$imgTooltip.style.left = e.clientX-0.19*window.innerWidth+'px';
+			$imgTooltip.classList.remove('hidden');
 		});
 		$li.addEventListener('mouseleave', function (e) {
-			$modalWindow.removeChild($image);
+			$imgTooltip.classList.add('hidden');
 		})
 	var $checkInput=document.createElement('input');
 		$checkInput.setAttribute('type', 'checkbox');
@@ -97,9 +86,27 @@ function createCartItemTemplate (item){
 			UpdateTotalPriceAndWeight();
 		});
 	var $spanInfo=document.createElement('span');
-	$spanInfo=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
-	$li.append($checkInput,$spanInfo);
+		$spanInfo=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
+	var $btnClose=document.createElement('button');
+	$btnClose.innerText='X';
+	$btnClose.classList.add('btnClose');
+	$btnClose.style.padding = '3px';
+	$btnClose.addEventListener('click', function(){
+		shop.removeSelectedItem(item);
+		UpdateCart();
+	})
+
+	$li.append($checkInput,$spanInfo,$btnClose);
   return $li;
+}
+function UpdateCart () {
+	var $cart=document.getElementById('CartList');
+	$cart.innerHTML='';
+	for(var el of shop.getSelectedItems()){
+		$cart.append(createCartItemTemplate(el));
+	}
+	$imgTooltip.classList.add('hidden');
+	UpdateTotalPriceAndWeight();
 }
 function UpdateTotalPriceAndWeight(){//for cart
 	var $checkboxesItems=document.querySelectorAll('.cartItem input[type=checkbox]');
@@ -114,6 +121,7 @@ function UpdateTotalPriceAndWeight(){//for cart
 	}
 	var $spanTotalPrice=$modalWindow.querySelector('.total-price span');
 	var $spanTotalWeight=$modalWindow.querySelector('.total-weight span');
+
 	console.log($spanTotalWeight.innerText);
 	$spanTotalPrice.innerText=totalPrice;
 	$spanTotalWeight.innerText=totalWeight;

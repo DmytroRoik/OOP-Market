@@ -1,5 +1,27 @@
+/*general*/
+.container{
+	width:90%;
+	margin:0 auto;
+}
+ul{
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+h1{
+	text-align: center;
+}
+/*header*/
+.header-btn{
+	float:right;
+	margin:10px 40px 0 10px;
+	padding: 1px;
+}
+.header-btn img{
+	width: 80px;
+	height: 40px;
+}
 #modalWindow{
-	border:1px solid red;
 	height: 70vh;
 	width:60%;
 	margin: 0 20% 0;
@@ -16,16 +38,23 @@
 	background-color: darkviolet;
 	margin-top: 0;
 }
-#modalWindow #btnClose{
+#modalWindow .btnClose{
 	float: right;
 	padding: 10px;
 	margin: 5px 10px;
 	border-radius: 5px;
 }
-#modalWindow #btnClose:hover{
+#modalWindow .btnClose:hover{
 	background-color: red;
 	border:1px solid red;
 	color:white;
+}
+.tooltip{
+	height: 200px;
+	width: 200px;
+	position: absolute;
+	border-radius: 40px;
+	overflow: hidden;
 }
 .hidden{
 	display: none;
@@ -40,16 +69,9 @@
 	padding-left: 10px;
 	cursor: pointer;
 }
-
-
-ul{
-	padding: 0;
-	list-style: none;
-	margin: 0;
-}
-h1{
-	text-align: center;
-	margin-bottom: 0;
+/*Shop items*/
+#ShopItems{
+	padding-top: 50px;
 }
 #Allitems{
 	list-style: none;

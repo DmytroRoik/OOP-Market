@@ -1,7 +1,8 @@
 var ShopModule=(function(){
 	var instance,
 	items=[],
-	selectedItems=[];
+	selectedItems=[],
+	soldItems=[];
 
 	var createInstance=function () {
 		return {
@@ -9,6 +10,8 @@ var ShopModule=(function(){
 			getSelectedItems: getSelectedItems,
 			addItem: addItem,
 			addItemToCart: addItemToCart,
+			removeSelectedItem: removeSelectedItemFromCart,
+			soldItem:soldItem,
 		}
 	}
 
@@ -27,7 +30,21 @@ var ShopModule=(function(){
 	var getSelectedItems= function(){
 		return selectedItems;
 	}
-
+	var removeSelectedItemFromCart = function(elem){
+		for(var i=0;i<selectedItems.length;i++){
+			if(selectedItems[i]==elem){
+				selectedItems.splice(i, 1);
+				return;
+			}
+		}
+	}
+	var soldItem=function (item) {
+		soldItems.push(item);
+		removeSelectedItemFromCart(item);
+	}
+	var getSoldItems=function () {
+		return soldItems;
+	}
 	return {
 		getInstance: function(){
 			return instance|| (instance=createInstance());
