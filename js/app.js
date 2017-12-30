@@ -45,7 +45,7 @@ shop.addItem(new Item({id:4, type:"fruit",price: 80,weight:4,name:"orange", icon
 shop.addItem(new Item({id:5, type:"fruit",price: 48,weight:2,name:"grapefruit", icon: "http://www.sodea-fruits.com/MTDsodea-fruit/gallery/slide-index/slide1.png"}))
 shop.addItem(new Item({id:6, type:"vegetables",price: 30,weight:2,name:"tomato", icon: "https://td-k.com/images/demo/Kalinovka_about_us_09.png"}))
 shop.addItem(new Item({id:7, type:"vegetables",price: 25,weight:4,name:"carrots", icon: "https://disted.edu.vn.ua/media/images/Natfil_/32/morkva2.jpg"}))
-shop.addItem(new Item({id:8, type:"vegetables",price: 26,weight:5,name:"bow", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Onions.jpg/230px-Onions.jpg"}))
+shop.addItem(new Item({id:8, type:"vegetables",price: 26,weight:5,name:"onion", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Onions.jpg/230px-Onions.jpg"}))
 shop.addItem(new Item({id:9, type:"vegetables",price: 40,weight:4,name:"cucumber", icon: "http://poradum.com/wp-content/uploads/2016/04/8f047bce24f340eb444f39bf6fbcec34.jpg"}))
 shop.addItem(new Item({id:10,type:"vegetables",price: 10,weight:3,name:"radishes", icon: "http://roslyna.com/wp-content/uploads/images/foto_tenevinoslivie_ovoshi_dlya_ogoroda.jpg"}))
 shop.addItem(new Item({id:11,type:"sweets",price: 78,weight:1,name:"honey cake", icon: "http://gurman.co.ua/wp-content/uploads/2017/01/abfd0d8d9b913493e948902c99f4e798.jpg"}))
