@@ -120,14 +120,14 @@ function createCartItemTemplate (item){
 	$btnClose.style.padding = '3px';
 	$btnClose.addEventListener('click', function(){
 		shop.removeSelectedItem(item);
-		UpdateCart();
+		updateCart();
 	})
 
 	$li.append($checkInput,$spanInfo,$btnClose);
   return $li;
 }
-var index=0;
-function createOrderItemTemplate (item){
+
+function createOrderItemTemplate (item,index){
 	var $li = document.createElement('li');
 		$li.classList.add('cartItem');
 		$li.addEventListener('mousemove', function (e) {
@@ -141,7 +141,7 @@ function createOrderItemTemplate (item){
 		})
 
 	var $spanInfo=document.createElement('span');
-		$spanInfo= ++index+') '+ item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
+		$spanInfo= index+') '+ item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
 	$li.append($spanInfo);
   return $li;
 }
@@ -161,8 +161,9 @@ function updateCart () {
 function updateOrder () {
 	deleteItemsFromModal();
 	var $cart=document.getElementById('CartList');
+	var index=0;
 	for(var el of shop.getSoldItems()){
-		$cart.append(createOrderItemTemplate (el));
+		$cart.append(createOrderItemTemplate (el,++index));
 	}
 	$imgTooltip.classList.add('hidden');
 	updateTotalInfoOrder(shop.getSoldItems());
