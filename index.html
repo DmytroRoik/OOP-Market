@@ -6,8 +6,28 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+	<header>
+		<button id="btnCart">Cart</button>
+	</header>
+	<section>
+		<h1>Shop Items</h1>
+		<ul id="Allitems">
+		</ul>
+	</section>
+	<section id="modalWindow" class="hidden">
+		<button id="btnClose">X</button>
+		<h1>Cart</h1>
+		<ul id="CartList">
 
-<script src="js/item.js"></script>
-<script src="js/shop.js"></script>
+		</ul>
+		<div class="total">
+			<h3 class="total-weight"><span>0</span>kg</h3>
+			<h3 class="total-price">Total price: <span>0</span>hrn</h3>
+		</div>
+		<button>Buy</button>
+	</section>
+	<script src="js/item.js"></script>
+	<script src="js/shop.js"></script>
+	<script src="js/app.js"></script>
 </body>
 </html>

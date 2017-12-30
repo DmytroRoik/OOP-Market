@@ -1,5 +1,6 @@
 function Item(options){
-	this.place=options.place;
+	this.id=options.id;
+	this.type=options.type;
 	this.price=options.price;
 	this.weight=options.weight;
 

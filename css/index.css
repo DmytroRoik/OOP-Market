@@ -1,0 +1,84 @@
+#modalWindow{
+	border:1px solid red;
+	height: 70vh;
+	width:60%;
+	margin: 0 20% 0;
+	position: fixed;
+	top:15%;
+	background-color: rgba(255,255,255,.95);
+
+	border-radius: 15px;
+	text-align: center;
+	overflow: hidden;
+}
+#modalWindow h1{
+	padding: 10px;
+	background-color: darkviolet;
+	margin-top: 0;
+}
+#modalWindow #btnClose{
+	float: right;
+	padding: 10px;
+	margin: 5px 10px;
+	border-radius: 5px;
+}
+#modalWindow #btnClose:hover{
+	background-color: red;
+	border:1px solid red;
+	color:white;
+}
+.hidden{
+	display: none;
+}
+.cartItem{
+	font-size: 20px;
+	line-height: 1.8em;
+	text-transform: capitalize;
+	text-align: left;
+	background-color: rgba(10,10,10,.2);
+	margin:2px 0;
+	padding-left: 10px;
+}
+
+
+ul{
+	padding: 0;
+	list-style: none;
+	margin: 0;
+}
+h1{
+	text-align: center;
+	margin-bottom: 0;
+}
+#Allitems{
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.item{
+	background-color: rgba(20,20,119,.2);
+	border-radius: 10px;
+	margin: 10px 0;
+	height: 300px;
+	width: 250px;
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+	text-align: center;
+	transition: all .5s;
+	padding: 10px;
+}
+.item:hover{
+	background-color: rgba(110,100,100,.8);
+}
+.item button{
+	width: 40%;
+	align-items: center;
+	border:1px solid red;
+}
+.item img{
+	height: 60%;
+}
+
