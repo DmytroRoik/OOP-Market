@@ -9,7 +9,7 @@
 
 	border-radius: 15px;
 	text-align: center;
-	overflow: hidden;
+	overflow: auto;
 }
 #modalWindow h1{
 	padding: 10px;
@@ -38,6 +38,7 @@
 	background-color: rgba(10,10,10,.2);
 	margin:2px 0;
 	padding-left: 10px;
+	cursor: pointer;
 }
 
 
@@ -72,6 +73,9 @@ h1{
 }
 .item:hover{
 	background-color: rgba(110,100,100,.8);
+}
+.item img{
+	max-width: 90%;
 }
 .item button{
 	width: 40%;
