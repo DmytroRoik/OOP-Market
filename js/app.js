@@ -11,6 +11,7 @@ document.getElementById('btnCart').addEventListener('click',function () {//load 
 		$cart.append(createCartItemTemplate(el));
 	}
 	$modalWindow.classList.remove('hidden');
+	UpdateTotalPriceAndWeight();
 })
 
 
@@ -66,7 +67,6 @@ function createItemTemplate (item) {//for items list
 			for (var i = shop.getAllItems().length - 1; i >= 0; i--) {
 				if(shop.getAllItems()[i].id==id){
 					shop.addItemToCart(shop.getAllItems()[i]);
-					console.log('selected',shop.getSelectedItems());
 					return;
 				}
 			}
@@ -78,11 +78,12 @@ var $image=document.createElement('img');
 			$image.style.height = '200px';
 			$image.style.width = '200px';
 			$image.style.position = 'absolute';
+			$image.style.borderRadius = '40px';
+			$image.style.overflow = 'hidden';
 function createCartItemTemplate (item){
 	var $li = document.createElement('li');
 		$li.classList.add('cartItem');
 		$li.addEventListener('mousemove', function (e) {
-			console.log(screenX,screenY);
 			$image.src=item.icon;
 			$image.style.top=e.clientY-0.14*window.innerHeight+'px';
 			$image.style.left = e.clientX-0.19*window.innerWidth+'px';
@@ -95,22 +96,27 @@ function createCartItemTemplate (item){
 		$checkInput.setAttribute('type', 'checkbox');
 		$checkInput.checked=true;
 		$checkInput.addEventListener('change', function () {
-			calcPriceWeight();
+			UpdateTotalPriceAndWeight();
 		});
 	var $spanInfo=document.createElement('span');
 	$spanInfo=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
 	$li.append($checkInput,$spanInfo);
   return $li;
 }
-function calcPriceWeight(){//for cart
+function UpdateTotalPriceAndWeight(){//for cart
 	var $checkboxesItems=document.querySelectorAll('.cartItem input[type=checkbox]');
 	var selectedItems=shop.getSelectedItems();
+	var totalPrice=0,
+		totalWeight=0;
 	for(var i=0;i<$checkboxesItems.length;i++){
 		if($checkboxesItems[i].checked==true){
-			console.log(i);
+			totalPrice+=selectedItems[i].price;
+			totalWeight+=selectedItems[i].weight;
 		}
 	}
-
-
-	//console.log($checkedItems);
+	var $spanTotalPrice=$modalWindow.querySelector('.total-price span');
+	var $spanTotalWeight=$modalWindow.querySelector('.total-weight span');
+	console.log($spanTotalWeight.innerText);
+	$spanTotalPrice.innerText=totalPrice;
+	$spanTotalWeight.innerText=totalWeight;
 }
