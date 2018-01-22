@@ -1,6 +1,6 @@
 /*general*/
 body{
-  background-image: url(https://image.freepik.com/free-photo/3d-render-of-spotlights-on-a-grunge-brick-wall_1048-6284.jpg);
+  background-image: url('../img/bg.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   color: rgb(190, 183, 183);
