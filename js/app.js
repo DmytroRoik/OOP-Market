@@ -48,7 +48,6 @@ shop.addItem(new Item({id:7, type:"vegetables",price: 25,weight:4,name:"carrots"
 shop.addItem(new Item({id:8, type:"vegetables",price: 26,weight:5,name:"onion", icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Onions.jpg/230px-Onions.jpg"}))
 shop.addItem(new Item({id:9, type:"vegetables",price: 40,weight:4,name:"cucumber", icon: "http://poradum.com/wp-content/uploads/2016/04/8f047bce24f340eb444f39bf6fbcec34.jpg"}))
 shop.addItem(new Item({id:10,type:"vegetables",price: 10,weight:3,name:"radishes", icon: "http://roslyna.com/wp-content/uploads/images/foto_tenevinoslivie_ovoshi_dlya_ogoroda.jpg"}))
-shop.addItem(new Item({id:11,type:"sweets",price: 78,weight:1,name:"honey cake", icon: "http://gurman.co.ua/wp-content/uploads/2017/01/abfd0d8d9b913493e948902c99f4e798.jpg"}))
 shop.addItem(new Item({id:12, type:"sweets",price: 90,weight:2,name:"cake", icon: "https://shefkuhar.com.ua/uploads/posts/2017-10/1507052642_gorhove-tstechko.jpg"}))
 shop.addItem(new Item({id:13, type:"food",price: 34,weight:0.5,name:"egg", icon: "http://www.zid.com.ua/images/article/jajce.jpg"}))
 shop.addItem(new Item({id:14, type:"food",price: 12,weight:1,name:"water", icon: "http://www.calorizator.ru/sites/default/files/imagecache/product_512/product/water-mineral.jpg"}))
@@ -81,6 +80,7 @@ function createItemTemplate (item) {//for items list
 	var $buttonAddToCart=document.createElement('button');
 		$buttonAddToCart.innerText='Add to Cart';
 		$buttonAddToCart.addEventListener('click',function (e) {
+      Materialize.toast('Item added to cart!', 3000, 'rounded');
 			var id= +(e.target.parentNode.getAttribute('data-id'));
 			for (var i = shop.getAllItems().length - 1; i >= 0; i--) {
 				if(shop.getAllItems()[i].id==id){
@@ -94,7 +94,7 @@ function createItemTemplate (item) {//for items list
 	}
 
 
-function createCartItemTemplate (item){
+function createCartItemTemplate (item,index){
 	var $li = document.createElement('li');
 		$li.classList.add('cartItem');
 		$li.addEventListener('mousemove', function (e) {
@@ -105,15 +105,21 @@ function createCartItemTemplate (item){
 		});
 		$li.addEventListener('mouseleave', function (e) {
 			$imgTooltip.classList.add('hidden');
-		})
-	var $checkInput=document.createElement('input');
-		$checkInput.setAttribute('type', 'checkbox');
+    });
+    // <input type="checkbox" id="test5" />
+    //       <label for="test5">Red</label>
+
+  var $checkInput=document.createElement('input');
+  $checkInput.setAttribute('id','item-'+index);
+    $checkInput.setAttribute('type', 'checkbox');
 		$checkInput.checked=true;
 		$checkInput.addEventListener('change', function () {
 			UpdateTotalPriceAndWeight(shop.getSelectedItems());
-		});
-	var $spanInfo=document.createElement('span');
-		$spanInfo=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
+    });
+    var $label=document.createElement('label');
+    $label.setAttribute('for','item-'+index);
+    $label.innerText=item.name+", type: "+item.type+", Weight: " +item.weight+",Price: "+item.price+" hrn";
+
 	var $btnClose=document.createElement('button');
 	$btnClose.innerText='X';
 	$btnClose.classList.add('btnClose');
@@ -121,9 +127,8 @@ function createCartItemTemplate (item){
 	$btnClose.addEventListener('click', function(){
 		shop.removeSelectedItem(item);
 		updateCart();
-	})
-
-	$li.append($checkInput,$spanInfo,$btnClose);
+  })
+	$li.append($checkInput, $label,$btnClose);
   return $li;
 }
 
@@ -151,9 +156,10 @@ function deleteItemsFromModal(){
 }
 function updateCart () {
 	deleteItemsFromModal();
-	var $cart=document.getElementById('CartList');
+  var $cart=document.getElementById('CartList');
+  var indexItem=0;
 	for(var el of shop.getSelectedItems()){
-		$cart.append(createCartItemTemplate(el));
+		$cart.append(createCartItemTemplate(el,++indexItem));
 	}
 	$imgTooltip.classList.add('hidden');
 	UpdateTotalPriceAndWeight(shop.getSelectedItems());

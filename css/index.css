@@ -1,4 +1,16 @@
 /*general*/
+body{
+  background-image: url(https://image.freepik.com/free-photo/3d-render-of-spotlights-on-a-grunge-brick-wall_1048-6284.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: rgb(190, 183, 183);
+}
+button{
+  color:rgb(190, 183, 183);
+  background-color: grey;
+  border-radius: 5px;
+  padding: 5px;
+}
 .container{
 	width:90%;
 	margin:0 auto;
@@ -31,12 +43,19 @@ h1{
 
 	border-radius: 15px;
 	text-align: center;
-	overflow: auto;
+  overflow: auto;
+  color: black;
 }
 #modalWindow h1{
 	padding: 10px;
 	background-color: darkviolet;
 	margin-top: 0;
+}
+#modalWindow .btnBuy{
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 5px;
+  color: white;
 }
 #modalWindow .btnClose{
 	float: right;
@@ -60,14 +79,23 @@ h1{
 	display: none;
 }
 .cartItem{
-	font-size: 20px;
-	line-height: 1.8em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+	font-size: 16px;
 	text-transform: capitalize;
 	text-align: left;
 	background-color: rgba(10,10,10,.2);
 	margin:2px 0;
-	padding-left: 10px;
+	padding-left: 30px;
 	cursor: pointer;
+}
+.cartItem label{
+  font-size: 20px;
+  color: black;
+}
+.cartItem .btnClose{
+  align-items: flex-end;
 }
 /*Shop items*/
 #ShopItems{
@@ -84,7 +112,7 @@ h1{
 	background-color: rgba(20,20,119,.2);
 	border-radius: 10px;
 	margin: 10px 0;
-	height: 300px;
+	height: 400px;
 	width: 250px;
 	display: flex;
 	flex-direction:column;
@@ -97,7 +125,8 @@ h1{
 	background-color: rgba(110,100,100,.8);
 }
 .item img{
-	max-width: 90%;
+  max-width: 90%;
+  max-height: 220px;
 }
 .item button{
 	width: 40%;

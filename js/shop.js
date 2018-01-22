@@ -22,8 +22,8 @@ var ShopModule=(function(){
 	}
 
 	var addItemToCart = function (element) {
-		selectedItems.push(element);
-		alert('items added to cart');
+    selectedItems.push(element);
+		//alert('items added to cart');
 	}
 
 	var getAllItems=function () {
