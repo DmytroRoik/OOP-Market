@@ -2,7 +2,11 @@
 
 body {
     background-image: url('../img/bg.jpg');
+<<<<<<< HEAD
     background-repeat: repeat-y;
+=======
+    background-repeat: no-repeat;
+>>>>>>> 030477ffec088da87b3c7ab739e4930095b79e43
     background-size: cover;
     color: rgb(190, 183, 183);
 }
